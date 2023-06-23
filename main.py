@@ -5,6 +5,11 @@ import cv2 as cv
 #Set to True if input is video, False if input is image
 video = True
 
+#if your input is an image, paste the path here
+imagePath = "oldladyface.webp"
+
+
+
 #weights and architectures for face, age, and gender detection models
 faceProto = "training/deploy.prototxt"
 faceModel = "training/res10_300x300_ssd_iter_140000_fp16.caffemodel"
@@ -60,18 +65,13 @@ def displayframe(title,frame):
 #Returns gender predictions from image
 def genderPrediction(face):
     blob = cv.dnn.blobFromImage(face, 1, (227, 227), means, False, False)
-    print("starting gender")
     genderNet.setInput(blob)  
-    print("finishing gender")
     return genderNet.forward()
 
 #Returns age predictions from image
 def agePrediction(face):
     blob = cv.dnn.blobFromImage(face, 1, (227, 227), means, False, False)
-    print("starting age")
     ageNet.setInput(blob)    
-    print("finish age")
-
     return ageNet.forward()
 
 
@@ -151,6 +151,6 @@ def ageandGenderPredictionForVideo():
 
 
 if not video:
-    ageandGenderPredictionForImage("oldladyface.webp")
+    ageandGenderPredictionForImage(imagePath)
 else: 
     ageandGenderPredictionForVideo()
